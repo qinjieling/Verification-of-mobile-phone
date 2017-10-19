@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>s手机码验证</title>
+    <script src="../Public/Js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Public/Css/base.css">
+    
+</head>
+<body>
+<div class="indexwrap">
+  	<div class="inputinfo">
+            <div class="phone">
+                <input type="tel" class="inputnum" placeholder="请输入手机号码"  maxlength="11"  > 
+                <img class="chaicon" src="../Public/Images/song20g/cha.png"/>
+            </div>
+            <div class="yzm clearfix">
+                <div class="yzmleft"><input type="tel" placeholder="请输入短信验证码 " class="cztext" maxlength="4"/></div> 
+                <div class="getnum" id="getnum" >  <span id="yzm-zz"></span> 
+                	<a id="yam-a" class="active"  rel="external">获取验证码</a> </div>
+             </div>
+        </div>
+  </div>
+</div>
+<script type="text/javascript">
+  	  var cont=1;
+		var countdown = 60;
+		function settime(){
+		 	 var val=document.getElementById("yam-a");
+			 if(countdown==0){
+			 	$(".chaicon").css("visibility","visible");//显示叉号
+			cont=1;	 
+			document.getElementById("yzm-zz").style.display="none";
+			document.getElementById("getnum").style.backgroundColor ="#1fa5b0";
+	        document.getElementById("yam-a").style.color ="#FFFFFF";
+			val.innerHTML="获取验证码";
+			countdown = 60;
+			clearTimeout();
+			return false;
+			}
+			else{
+				$(".chaicon").css("visibility","hidden");//隐藏叉号
+			cont=2;
+			document.getElementById("yzm-zz").style.display="block";
+			val.innerHTML=countdown + "秒后重发";
+			document.getElementById("getnum").style.backgroundColor ="rgba(234,184,134,.7)";
+			document.getElementById("yam-a").style.color ="#FFFFFF";
+			 	countdown--;
+				}
+				setTimeout(function() {
+				settime()
+				},1000);  
+			 }
+		$(function(){
+			$('.inputnum').bind('keyup', function () {
+				if($('.inputnum').val().length==11){
+		           $('.inputnum').blur();
+				}else{
+				}
+				ifclick();
+		   });	
+		   $('.cztext').bind('keyup', function () {
+				if($('.cztext').val().length==4){
+		           $('.cztext').blur();
+		           $('.lqbtn').addClass('onit');
+				}else{
+				}
+		   });	
+			$("#yam-a").click(function(){
+				  var c=$('.inputnum').val().length;
+				  if(c==11&&cont==1){
+					   settime();
+				   }else{
+					   return false;
+					}
+			  });
+			  function ifclick(){
+				if($('.inputnum').val().length==11){
+					$("#getnum").css("background","#1fa5b0");
+					$("#yam-a").css("color","#FFFFFF");
+				}else{
+					$("#yam-a").css("color","rgba(255,255,255,.5)");
+				}
+			}
+			  /*清空手机号*/
+			$(".chaicon").click(function(){
+				$(this).siblings().val('');
+				$(this).css("visibility","hidden");
+				$("#yam-a").css("color","rgba(255,255,255,.5)");
+			});
+			 $('.inputnum').bind('input propertychange', function() { 
+	 			//手机号为空隐藏叉号
+	 			if($('.inputnum').val()==""){
+			   			$(".chaicon").css("visibility","hidden");
+			   		}else{
+			   			$(".chaicon").css("visibility","visible");
+			   		}
+			});
+			$('.lqbtn').click(function(){
+				if(!$(this).hasClass("onit")){
+					$('.lqbtn').attr("disabled","disabled");
+				}else{
+					$('.lqbtn').attr("disabled",false);
+					showdemo($("#feitk"));
+				}
+			})
+			
+		var wh=$(window).height();
+		var bh=$(".indexwrap").height();
+		if(wh>bh){
+			$(".indexwrap").height(wh);
+			$(".cjbottom").css({"position":"absolute","bottom":"0rem"});
+		}
+			$("#zhidaobtn,.tmbg").click(function(){
+				$(".tmbg").hide();
+			})
+			$(".tank").click(function (event) { 
+	             event.stopPropagation();//阻止事件向上冒泡 
+	         });
+			function showdemo(obj){
+			    $(".tmbg").hide();
+			    obj.show();
+			    var screenHeight = $(window).height();
+			    var tankuangHeight =obj.find('.tank').height();
+			    var topHeight =(screenHeight-tankuangHeight)/2;
+			    obj.height(screenHeight);
+			    obj.children().css('top',topHeight);
+			}
+		})
+  </script>
+</body>
+</html>
+
+
+
+input::-webkit-input-placeholder {color: #9cae99;}
+input::-moz-input-placeholder {color: #9cae99;}
+input::input-placeholder {color: #9cae99;}
+
